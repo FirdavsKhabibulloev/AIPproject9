@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Project 1: Table </title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        input[type="button"][value="OK"] {
+            background-color: green;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        input[type="reset"][value="Cancel"] {
+            background-color: red;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        input[type="button"][value="OK"]:hover,
+        input[type="reset"][value="Cancel"]:hover {
+            transform: scale(1.1);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        th,
+        td {
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="myForm">
+        <table>
+            <tr>
+                <td>First name:</td>
+                <td><input type="text" id="fname" name="fname"><div class="error-message" id="error-fname"></div></td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td><input type="text" id="lname" name="lname"><div class="error-message" id="error-lname"></div></td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input list="agelist" id="age" name="age">
+                    <datalist id="agelist">
+                        <option value="0-18"></option>
+                        <option value="18-35"></option>
+                        <option value="35-50"></option>
+                        <option value="over 50"></option>
+                    </datalist>
+                </td>
+            </tr>
+            <tr>
+                <td>Sex:</td>
+                <td>
+                    <input type="radio" id="male" name="sex" value="Male"><label for="male">Male</label>
+                    <input type="radio" id="female" name="sex" value="Female"><label for="female">Female</label>
+                </td>
+            </tr>
+            <tr>
+                <td>Hobby:</td>
+                <td>
+                    <input type="checkbox" id="reading" name="hobby" value="Reading"><label for="art">Reading</label>
+                    <input type="checkbox" id="sport" name="hobby" value="Sport"><label for="sports">Sport</label>
+                    <input type="checkbox" id="math" name="hobby" value="Math"><label for="music">Math</label>
+                    <input type="checkbox" id="modelling" name="hobby" value="Modelling"><label for="eng">Modelling</label>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" onclick="showpopup()" value="OK"></td>
+                <td><input type="reset" value="Cancel"></td>
+            </tr>
+        </table>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#fname, #lname').keypress(function(event) {
+                var charCode = event.which;
+                if (!(charCode >= 65 && charCode <= 90) && !(charCode >= 97 && charCode <= 122)) {
+                    event.preventDefault(); // Prevent typing non-alphabet characters
+                    $('#error-' + this.id).text('Only letters are allowed.'); // Display error message
+                } else {
+                    $('#error-' + this.id).text(''); // Clear error message if valid character is typed
+                }
+            });
+
+            $('input[type="button"]').hover(function () {
+                $(this).css("transform", "scale(1.1)");
+            }, function () {
+                $(this).css("transform", "scale(1)");
+            });
+        });
+
+        function showpopup() {
+            var myForm = document.getElementById("myForm");
+            var fname = document.getElementById('fname').value;
+            var lname = document.getElementById('lname').value;
+            var age = document.getElementById('age').value;
+            var sex = "Not selected";
+            if (document.getElementById("male").checked == true) {
+                sex = document.getElementById("male").value;
+            }
+            if (document.getElementById("female").checked == true) {
+                sex = document.getElementById("female").value;
+            }
+            var hobbies = "";
+            for (var i = 0; i < myForm.hobby.length; i++) {
+                if (myForm.hobby[i].checked == true) {
+                    hobbies += myForm.hobby[i].value + " ";
+                }
+            }
+            alert('Form submission:\n\nName: ' + fname + ' ' + lname + '\nAge: ' + age + '\nSex: ' + sex + '\nHobbies: ' + hobbies);
+        }
+    </script>
+</body>
+
+</html>

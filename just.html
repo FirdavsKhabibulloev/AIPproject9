@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project 7 - jQuery and its Applications</title>
+
+<!-- CSS Styling -->
+<style>
+    /* Your existing CSS styles */
+</style>
+</head>
+<body class="proj5">
+
+<div class="header">
+    <h1>Advanced Internet Programming</h1>
+    <h2>Project 7 - jQuery and its Applications</h2>
+</div>
+
+<!-- Project links container -->
+<div id="leftcolumn">
+    <h2>Menu</h2>
+    <!-- Menu container -->
+    <div id="menuContainer"></div>
+</div>
+
+<div class="description">
+    <h3>jQuery is a fast, lightweight, and feature-rich JavaScript library 
+        that simplifies many tasks, such as HTML document traversal and manipulation, 
+        event handling, and animation. Its applications range from enhancing user
+        interface interactions on websites to creating dynamic and responsive web applications. 
+        By providing a concise and efficient way to write JavaScript code, jQuery has become
+        one of the most widely used libraries in web development.</h3>
+</div>
+
+<div class="about">
+    <h2>About</h2>
+    <p>This course covers fundamentals of HTML, JavaScript, and CSS providing learners with essential skills for web development.</p>
+</div>
+
+<!-- JavaScript for toggle effect -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Sample JSON data representing the menu
+        var menuData = {
+            "menu": [
+                {
+                    "name": "Home",
+                    "url": "index1.html"
+                },
+                {
+                    "name": "Events",
+                    "url": "events.html"
+                },
+                {
+                    "name": "Resources",
+                    "url": "resources.html"
+                },
+                {
+                    "name": "About",
+                    "url": "about.html"
+                },
+                {
+                    "name": "Courses",
+                    "url": "#",
+                    "submenu": [
+                        {
+                            "name": "Python",
+                            "url": "python.html"
+                        },
+                        {
+                            "name": "Java",
+                            "url": "java.html"
+                        },
+                        {
+                            "name": "C/C++",
+                            "url": "c.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Contact",
+                    "url": "contact.html"
+                }
+            ]
+        };
+
+        // Function to generate HTML for the menu recursively
+        function generateMenu(menuData) {
+            var html = '<ul>';
+            menuData.forEach(function(item, index) {
+                html += '<li data-index="' + index + '">';
+                html += '<a href="' + item.url + '">' + item.name + '</a>';
+                // Check if item has a submenu
+                if (item.submenu && item.submenu.length > 0) {
+                    // Recursively generate submenu HTML
+                    html += generateMenu(item.submenu);
+                }
+                html += '</li>';
+            });
+            html += '</ul>';
+            return html;
+        }
+
+        // Render the menu in the menuContainer element
+        $('#menuContainer').html(generateMenu(menuData.menu));
+
+        // Keyboard events
+        $(document).keydown(function(e) {
+            var $currentItem = $('#leftcolumn .selected');
+            var $menuItems = $('#leftcolumn li');
+
+            if (e.keyCode === 38) { // Up arrow
+                e.preventDefault();
+                if ($currentItem.prev().length > 0) {
+                    $currentItem.removeClass('selected');
+                    $currentItem.prev().addClass('selected');
+                }
+            } else if (e.keyCode === 40) { // Down arrow
+                e.preventDefault();
+                if ($currentItem.next().length > 0) {
+                    $currentItem.removeClass('selected');
+                    $currentItem.next().addClass('selected');
+                }
+            } else if (e.keyCode === 13) { // Enter key
+                e.preventDefault();
+                var url = $currentItem.find('a').attr('href');
+                window.location.href = url;
+            }
+        });
+
+        // Initial selection
+        $('#leftcolumn li:first-child').addClass('selected');
+    });
+</script>
+
+</body>
+</html>
+

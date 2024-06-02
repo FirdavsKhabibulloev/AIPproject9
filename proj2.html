@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 2</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Violet shading */
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 8px 16px;
+            font-family: Arial, sans-serif; /* Better font style */
+        }
+
+        button:hover {
+            transform: scale(1.1); /* Scale effect on hover */
+        }
+
+        button.ok {
+            background-color: green; /* OK button green background */
+            color: white;
+        }
+
+        button.cancel {
+            background-color: red; /* Cancel button red background */
+            color: white;
+        }
+
+        .myTable {
+            display: table;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Better table appearance */
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cell input[type="text"],
+        .cell input[type="checkbox"],
+        .cell input[type="radio"],
+        .cell button {
+            margin-right: 5px;
+        }
+
+        .row:last-child .cell {
+            border-bottom: none;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="myTable">
+        <div class="row">
+            <div class="cell">First name:</div>
+            <div class="cell"><input type="text" id='fname' name="fname"><div class="error-message" id="error-fname"></div></div>
+        </div>
+        <div class="row">
+            <div class="cell">Last name:</div>
+            <div class="cell"><input type="text" id='lname' name="lname"><div class="error-message" id="error-lname"></div></div>
+        </div>
+        <div class="row">
+            <div class="cell">Age:</div>
+            <div class="cell">
+                <input list="agelist" id="age" name="age">
+                <datalist id="agelist">
+                    <option value="0-18"></option>
+                    <option value="18-35"></option>
+                    <option value="35-50"></option>
+                    <option value="over 50"></option>
+                </datalist>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Sex:</div>
+            <div class="cell">
+                <input type="radio" id="male" name="sex" value="Male">
+                <label for="male"> Male </label>
+                <input type="radio" id="female" name="sex" value="Female">
+                <label for="female"> Female </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Hobby:</div>
+            <div class="cell">
+                <input type="checkbox" id="reading" name="hobby" value="Reading">
+                <label for="art">Reading</label>
+                <input type="checkbox" id="sport" name="hobby" value="Sport">
+                <label for="sports">Sport</label>
+                <input type="checkbox" id="math" name="hobby" value="Math">
+                <label for="music">Math</label>
+                <input type="checkbox" id="modelling" name="hobby" value="Modelling">
+                <label for="eng">Modelling</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell"><button class="ok" onclick="popUp()">OK</button></div> <!-- OK button with green background -->
+            <div class="cell"><button class="cancel" onclick="resetForm()">CANCEL</button></div> <!-- Cancel button with red background -->
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#fname, #lname').keypress(function(event) {
+                var charCode = event.which;
+                if (!(charCode >= 65 && charCode <= 90) && !(charCode >= 97 && charCode <= 122)) {
+                    event.preventDefault(); // Prevent typing non-alphabet characters
+                    $('#error-' + this.id).text('Only alphabet letters are allowed.'); // Display error message
+                } else {
+                    $('#error-' + this.id).text(''); // Clear error message if valid character is typed
+                }
+            });
+
+            $('button.ok, button.cancel').hover(function () {
+                $(this).css("transform", "scale(1.1)");
+            }, function () {
+                $(this).css("transform", "scale(1)");
+            });
+        });
+
+        function popUp() {
+            // Get the form data
+            var firstName = document.getElementById("fname").value;
+            var lastName = document.getElementById("lname").value;
+            var age = document.getElementById("age").value;
+            var sex = document.querySelector('input[name="sex"]:checked').value;
+            var hobbies = [];
+            var checkboxes = document.querySelectorAll('input[name="hobby"]:checked');
+            for (var i = 0; i < checkboxes.length; i++) {
+                hobbies.push(checkboxes[i].value);
+            }
+            var data = "First Name: " + firstName + "\n" +
+                "Last Name: " + lastName + "\n" +
+                "Age: " + age + "\n" +
+                "Sex: " + sex + "\n" +
+                "Hobbies: " + hobbies.join(", ");
+
+            // Display the data in a pop-up window
+            alert(data);
+        }
+
+        function resetForm() {
+            document.getElementById("fname").value = '';
+            document.getElementById("lname").value = '';
+            document.getElementById("age").value = '';
+            var checkboxes = document.querySelectorAll('input[name="hobby"]:checked');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = false;
+            });
+        }
+    </script>
+</body>
+</html>
+

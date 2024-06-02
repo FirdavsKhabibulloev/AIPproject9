@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="countryApp">
+<head>
+  <meta charset="utf-8">
+  <title>List of countries</title>
+  <h1>Top 10 Most Peaceful Countries According to the Global Peace Index</h1>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+  <script>
+    var countryApp = angular.module('countryApp', []);
+    countryApp.controller('CountryListCtrl', function ($scope) {
+      $scope.countries = [
+        {
+          "name": "Iceland",
+          "population": 364260,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Iceland.svg",
+          "capital": "Reykjavík",
+          "gdp": 29216
+        },
+        {
+          "name": "Denmark",
+          "population": 5822763,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
+          "capital": "Copenhagen",
+          "gdp": 369062
+        },
+        {
+          "name": "Ireland",
+          "population": 4977400,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg",
+          "capital": "Dublin",
+          "gdp": 382487
+        },
+        {
+          "name": "New Zealand",
+          "population": 4879829,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg",
+          "capital": "Wellington",
+          "gdp": 206783
+        },
+        {
+          "name": "Austria",
+          "population": 8923229,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
+          "capital": "Vienna",
+          "gdp": 454257
+        },
+        {
+          "name": "Singapore",
+          "population": 5703600,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg",
+          "capital": "Singapore",
+          "gdp": 372063
+        },
+        {
+          "name": "Portugal",
+          "population": 10291027,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg",
+          "capital": "Lisbon",
+          "gdp": 235242
+        },
+        {
+          "name": "Slovenia",
+          "population": 2100126,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/f/f0/Flag_of_Slovenia.svg",
+          "capital": "Ljubljana",
+          "gdp": 53917
+        },
+        {
+          "name": "Japan",
+          "population": 126800000,
+          "flagURL": "//upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
+          "capital": "Tokyo",
+          "gdp": 5170504
+        },
+        {
+          "name": "Switzerland",
+          "population": 8557000,
+          "flagURL": "//upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg",
+          "capital": "Bern",
+          "gdp": 678887
+        }
+      ];
+    });
+  </script>
+</head>
+<body ng-controller="CountryListCtrl">
+  <ul>
+    <li ng-repeat="country in countries">
+      {{country.name}}
+    </li>
+  </ul>
+</body>
+</html>
+

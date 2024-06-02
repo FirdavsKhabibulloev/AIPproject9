@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project 7 - jQuery and its Applications</title>
+
+<!-- CSS Styling -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    .proj5 #leftcolumn {
+        float: left;
+        width: 150px;
+        height: 400px;
+        border: 3px solid black;
+        padding: 5px;
+        padding-left: 8px;
+        font-weight: bold;
+        margin-right: 27.5px; /* Adjusted to half of the desired distance */
+    }
+
+    .proj5 #leftcolumn a {
+        padding: 3px 1px;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        font-style: italic;
+        border-bottom: 1px solid gray;
+        color: black;
+        transition: background-color 0.3s, color 0.3s, font-size 0.3s;
+    }
+
+    .proj5 #leftcolumn a:hover {
+        background-color: green;
+        color: white;
+        font-size: 110%;
+    }
+   
+
+
+    .proj5 .description {
+        float: left;
+        width: calc(50% - 195px);
+        min-height: 400px;
+        border: 3px solid black;
+        margin-bottom: 20px;
+        padding: 5px;
+        padding-bottom: 8px;
+        transition: transform 0.3s;
+        font-weight: normal;
+        margin-left: 27.5px;
+    }
+
+    .proj5 .description:hover {
+        transform: scale(1.1);
+    }
+
+    .proj5 .header {
+        text-align: center;
+        margin-bottom: 20px;
+        color: blue; /* Initial color */
+    }
+
+    .proj5 .header h1 {
+        margin-bottom: 5px;
+    }
+
+    .proj5 .header h2 {
+        margin-top: 0;
+        font-style: italic;
+    }
+
+    .proj5 .about {
+        float: left;
+        width: calc(25% - 30px);
+        margin-bottom: 20px;
+        border: 3px solid black;
+        padding: 5px;
+        margin-left: 32.5px;
+    }
+
+    .proj5 .about:hover {
+        transform: scale(1.1); 
+    }
+
+    /* Button style */
+    .project-button {
+        cursor: pointer;
+        background-color: lightblue;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .project-button:hover {
+        background-color: lightcyan;
+    }
+
+    .project-list {
+        display: none;
+    }
+
+    .project-list.show {
+        display: block;
+    }
+
+    .project-list a {
+        display: block;
+        text-decoration: none;
+        color: black;
+        padding: 5px 0;
+    }
+
+    /* Added CSS styling for the menu */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        margin-bottom: 5px;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: black;
+    }
+
+    ul ul {
+        display: none;
+        margin-left: 20px;
+    }
+
+    ul li:hover > ul {
+        display: block;
+    }
+</style>
+</head>
+<body class="proj5">
+
+<div class="header">
+    <h1>Advanced Internet Programming</h1>
+    <h2>Project 8 - JSON and jQuery Applications </h2>
+</div>
+
+<!-- Project links container -->
+<div id="leftcolumn">
+    <h2>Menu</h2>
+    <!-- Menu container -->
+    <div id="menuContainer"></div>
+</div>
+
+<div class="description">
+    <h3>jQuery is a fast, lightweight, and feature-rich JavaScript library 
+        that simplifies many tasks, such as HTML document traversal and manipulation, 
+        event handling, and animation. Its applications range from enhancing user
+        interface interactions on websites to creating dynamic and responsive web applications. 
+        By providing a concise and efficient way to write JavaScript code, jQuery has become
+        one of the most widely used libraries in web development.</h3>
+</div>
+
+<div class="about">
+    <h2>About</h2>
+    <p>This course covers fundamentals of HTML, JavaScript, and CSS providing learners with essential skills for web development.</p>
+</div>
+
+<!-- JavaScript for toggle effect -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Sample JSON data representing the menu
+        var menuData = {
+            "menu": [
+                {
+                    "name": "Home",
+                    "url": "index1.html"
+                },
+                {
+                    "name": "Events",
+                    "url": "events.html"
+                },
+                {
+                    "name": "Resources",
+                    "url": "resources.html"
+                },
+                {
+                    "name": "About",
+                    "url": "about.html"
+                },
+                {
+                    "name": "Courses",
+                    "url": "#",
+                    "submenu": [
+                        {
+                            "name": "Python",
+                            "url": "python.html"
+                        },
+                        {
+                            "name": "Java",
+                            "url": "java.html"
+                        },
+                        {
+                            "name": "C/C++",
+                            "url": "c.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Contact",
+                    "url": "contact.html"
+                }
+            ]
+        };
+
+        // Function to generate HTML for the menu recursively
+        function generateMenu(menuData) {
+            var html = '<ul>';
+            menuData.forEach(function(item) {
+                html += '<li>';
+                html += '<a href="' + item.url + '">' + item.name + '</a>';
+                // Check if item has a submenu
+                if (item.submenu && item.submenu.length > 0) {
+                    // Recursively generate submenu HTML
+                    html += generateMenu(item.submenu);
+                }
+                html += '</li>';
+            });
+            html += '</ul>';
+            return html;
+        }
+
+        // Render the menu in the menuContainer element
+        $('#menuContainer').html(generateMenu(menuData.menu));
+    });
+</script>
+
+</body>
+</html>
+

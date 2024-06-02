@@ -1,0 +1,31 @@
+[
+    {
+      "name": "Norway",
+      "population": 5367580,
+      "flagURL": "//upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
+      "capital": "Oslo",
+      "gdp": 81752
+    },
+    {
+      "name": "Germany",
+      "population": 83783942,
+      "flagURL": "//upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
+      "capital": "Berlin",
+      "gdp": 460787
+    },
+    {
+      "name": "Japan",
+      "population": 126476461,
+      "flagURL": "//upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
+      "capital": "Tokyo",
+      "gdp": 508246
+    },
+    {
+      "name": "Finland",
+      "population": 5540720,
+      "flagURL": "//upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Finland.svg",
+      "capital": "Helsinki",
+      "gdp": 290477
+    }
+  ]
+  

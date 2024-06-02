@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms</title>
+    <style>
+        /* Add your CSS styles here */
+        button {
+            padding: 8px 14px;
+            margin: 4px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            outline: none;
+        }
+
+        #generateButton {
+            background-color: #3498db; /* Blue */
+            color: #fff;
+        }
+
+        #applySelectionSortButton {
+            background-color: #2ecc71; /* Green */
+            color: #fff;
+        }
+
+        #applyMergeSortButton {
+            background-color: #2ecc71; /* Green */
+            color: #fff;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sorting Algorithms</h2>
+    <div>
+        <label for="numInput"><b>Enter number of elements:</b></label>
+        <input type="text" id="numInput">
+        <span class="error-message" id="error-numInput"></span>
+        <button id="generateButton" onclick="generateNumbers()">Generate</button>
+    </div>
+    <div>
+        <h3>Randomly Generated Numbers:</h3>
+        <span id="generatedNumbers"></span>
+    </div>
+    <div>
+        <h3>Selection Sort method</h3>
+        <button id="applySelectionSortButton" onclick="applySelectionSort()">Apply Selection Sort</button>
+        <span id="selectionSortedNumbers"></span>
+        <p id="selectionSortTime"></p>
+    </div>
+    <div>
+        <h3>Merge Sort method</h3>
+        <button id="applyMergeSortButton" onclick="applyMergeSort()">Apply Merge Sort</button>
+        <span id="mergeSortedNumbers"></span>
+        <p id="mergeSortTime"></p>
+    </div>
+
+    <script>
+        // JavaScript functions for generating random numbers and sorting algorithms
+        function generateNumbers() {
+            var numInput = document.getElementById('numInput').value;
+            var generatedNumbers = document.getElementById('generatedNumbers');
+            generatedNumbers.textContent = ''; // Clear previous numbers
+
+            var numbers = [];
+            for (var i = 0; i < numInput; i++) {
+                var randomNumber = Math.floor(Math.random() * 100); // Generate random number between 0 to 99
+                numbers.push(randomNumber);
+            }
+
+            generatedNumbers.textContent = numbers.join(', ');
+        }
+
+        function applySelectionSort() {
+            var numbers = document.getElementById('generatedNumbers').textContent.split(', ');
+            var arr = getNumbersArray(numbers);
+
+            // Record start time
+            var startTime = performance.now();
+
+            // Call selection sort algorithm
+            selectionSortAlgorithm(arr);
+
+            // Record end time
+            var endTime = performance.now();
+
+            // Update the UI with sorted numbers and execution time
+            document.getElementById('selectionSortedNumbers').textContent = arr.join(', ');
+            document.getElementById('selectionSortTime').textContent = "Execution Time: " + formatExecutionTime(endTime - startTime);
+        }
+
+        function applyMergeSort() {
+            var numbers = document.getElementById('generatedNumbers').textContent.split(', ');
+            var arr = getNumbersArray(numbers);
+
+            // Record start time
+            var startTime = performance.now();
+
+            // Call merge sort algorithm
+            arr = mergeSortAlgorithm(arr);
+
+            // Record end time
+            var endTime = performance.now();
+
+            // Update the UI with sorted numbers and execution time
+            document.getElementById('mergeSortedNumbers').textContent = arr.join(', ');
+            document.getElementById('mergeSortTime').textContent = "Execution Time: " + formatExecutionTime(endTime - startTime);
+        }
+
+        function selectionSortAlgorithm(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len - 1; i++) {
+                var minIndex = i;
+                for (var j = i + 1; j < len; j++) {
+                    if (arr[j] < arr[minIndex]) {
+                        minIndex = j;
+                    }
+                }
+                if (minIndex !== i) {
+                    var temp = arr[i];
+                    arr[i] = arr[minIndex];
+                    arr[minIndex] = temp;
+                }
+            }
+        }
+
+        function mergeSortAlgorithm(arr) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            var mid = Math.floor(arr.length / 2);
+            var left = arr.slice(0, mid);
+            var right = arr.slice(mid);
+
+            return merge(mergeSortAlgorithm(left), mergeSortAlgorithm(right));
+        }
+
+        function merge(left, right) {
+            var result = [];
+            var leftIndex = 0;
+            var rightIndex = 0;
+
+            while (leftIndex < left.length && rightIndex < right.length) {
+                if (left[leftIndex] < right[rightIndex]) {
+                    result.push(left[leftIndex]);
+                    leftIndex++;
+                } else {
+                    result.push(right[rightIndex]);
+                    rightIndex++;
+                }
+            }
+
+            return result.concat(left.slice(leftIndex), right.slice(rightIndex));
+        }
+
+        function getNumbersArray(numbers) {
+            var arr = [];
+
+            // Convert list items to an array of numbers
+            for (var i = 0; i < numbers.length; i++) {
+                arr.push(parseInt(numbers[i]));
+            }
+
+            return arr;
+        }
+
+        function formatExecutionTime(time) {
+            return time.toFixed(3) + " milliseconds";
+        }
+
+        // Event listener to allow only numbers in the input field
+        document.getElementById('numInput').addEventListener('keypress', function(event) {
+            var charCode = event.which ? event.which : event.keyCode;
+            if (charCode < 48 || charCode > 57) {
+                event.preventDefault();
+                document.getElementById('error-numInput').textContent = 'Only numbers are allowed.';
+            } else {
+                document.getElementById('error-numInput').textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
